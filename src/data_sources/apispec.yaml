@@ -1,0 +1,158 @@
+openapi: 3.0.0
+info:
+  title: Example API
+  description: This is a generic API specification example.
+  version: 1.0.0
+
+servers:
+  - url: https://api.example.com/v1
+    description: Main production server
+  - url: https://staging-api.example.com/v1
+    description: Staging server
+
+paths:
+  /users:
+    get:
+      summary: Get list of users
+      description: Retrieves a list of all users.
+      responses:
+        '200':
+          description: A list of users.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+    post:
+      summary: Create a new user
+      description: Adds a new user to the system.
+      requestBody:
+        description: User to add
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewUser'
+      responses:
+        '201':
+          description: User created successfully.
+        '400':
+          description: Bad request.
+
+  /users/{userId}:
+    get:
+      summary: Get a specific user
+      description: Retrieves details of a specific user by their ID.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: The ID of the user to retrieve.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: User not found.
+
+    put:
+      summary: Update a user
+      description: Updates the details of an existing user.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: The ID of the user to update.
+          schema:
+            type: string
+      requestBody:
+        description: Updated user information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUser'
+      responses:
+        '200':
+          description: User updated successfully.
+        '404':
+          description: User not found.
+
+    delete:
+      summary: Delete a user
+      description: Removes a user from the system by their ID.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: The ID of the user to delete.
+          schema:
+            type: string
+      responses:
+        '204':
+          description: User deleted successfully.
+        '404':
+          description: User not found.
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier for a user.
+        name:
+          type: string
+          description: The name of the user.
+        email:
+          type: string
+          description: The email of the user.
+        created_at:
+          type: string
+          format: date-time
+          description: The date and time when the user was created.
+
+    NewUser:
+      type: object
+      required:
+        - name
+        - email
+      properties:
+        name:
+          type: string
+          description: The name of the new user.
+        email:
+          type: string
+          description: The email of the new user.
+
+    UpdateUser:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The new name of the user.
+        email:
+          type: string
+          description: The new email of the user.
+
+security:
+  - apiKeyAuth: []
+
+components:
+  securitySchemes:
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+
+tags:
+  - name: Users
+    description: Operations related to users
+

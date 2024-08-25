@@ -1,0 +1,81 @@
+rules:
+  - id: 1
+    name: "Password Policy"
+    description: "Ensure all user passwords are at least 12 characters long and contain a mix of letters, numbers, and special characters."
+    severity: "high"
+    conditions:
+      - type: "password_length"
+        operator: "greater_than_or_equal"
+        value: 12
+      - type: "contains"
+        value:
+          - "letters"
+          - "numbers"
+          - "special_characters"
+    actions:
+      - type: "notify"
+        message: "Password does not meet the required complexity."
+      - type: "block"
+        reason: "Password does not comply with the security policy."
+
+  - id: 2
+    name: "Failed Login Attempt Limit"
+    description: "Lock user account after 5 consecutive failed login attempts within 10 minutes."
+    severity: "medium"
+    conditions:
+      - type: "failed_login_attempts"
+        operator: "greater_than_or_equal"
+        value: 5
+      - type: "time_window"
+        duration: "10m"
+    actions:
+      - type: "lock_account"
+        duration: "30m"
+      - type: "notify"
+        message: "Account locked due to multiple failed login attempts."
+
+  - id: 3
+    name: "Data Encryption"
+    description: "Ensure sensitive data is encrypted at rest and in transit."
+    severity: "critical"
+    conditions:
+      - type: "data_classification"
+        value: "sensitive"
+    actions:
+      - type: "encrypt"
+        method: "AES-256"
+      - type: "notify"
+        message: "Sensitive data must be encrypted."
+
+  - id: 4
+    name: "Access Control"
+    description: "Verify that users have the appropriate access level for the requested resource."
+    severity: "high"
+    conditions:
+      - type: "access_level"
+        operator: "less_than"
+        value: "required_access_level"
+    actions:
+      - type: "deny_access"
+        reason: "Insufficient access level."
+      - type: "notify"
+        message: "User does not have the required access level."
+
+  - id: 5
+    name: "Software Update Policy"
+    description: "Ensure all software is up-to-date and patches are applied within 24 hours of release."
+    severity: "high"
+    conditions:
+      - type: "software_version"
+        operator: "less_than"
+        value: "latest_version"
+      - type: "patch_release_time"
+        operator: "greater_than"
+        value: "24h"
+    actions:
+      - type: "notify"
+        message: "Software is outdated. Please apply the latest patch."
+      - type: "force_update"
+        reason: "Outdated software may have vulnerabilities."
+
+# Additional rules can be added below

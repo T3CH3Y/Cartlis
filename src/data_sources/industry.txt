@@ -1,0 +1,6 @@
+Industry Requirements Overview for Investment Banking
+
+Know Your Customer (KYC) and Anti-Money Laundering (AML):
+Adherence to strict KYC and AML regulations to prevent financial crimes.
+Regularly update customer profiles and monitor transactions for suspicious activity.
+Implement procedures for customer due diligence (CDD) and enhanced due diligence (EDD) for high-risk clients.

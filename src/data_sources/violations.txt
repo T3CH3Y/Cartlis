@@ -1,0 +1,53 @@
+Violation for "Password Policy" (Rule ID: 1)
+Violation ID: V1
+Rule ID: 1
+Description: A user's password is only 8 characters long and lacks special characters.
+Severity: high
+Detected Conditions:
+password_length: 8 (less than 12)
+contains: "letters", "numbers" (missing "special_characters")
+Actions Taken:
+Notify: "Password does not meet the required complexity."
+Block: "Password does not comply with the security policy."
+Violation for "Failed Login Attempt Limit" (Rule ID: 2)
+Violation ID: V2
+Rule ID: 2
+Description: A user attempted to log in 6 times unsuccessfully within a 10-minute window.
+Severity: medium
+Detected Conditions:
+failed_login_attempts: 6 (greater than or equal to 5)
+time_window: 9m30s (within 10m)
+Actions Taken:
+Lock Account: Account locked for 30m.
+Notify: "Account locked due to multiple failed login attempts."
+Violation for "Data Encryption" (Rule ID: 3)
+Violation ID: V3
+Rule ID: 3
+Description: Sensitive data was detected stored in plaintext.
+Severity: critical
+Detected Conditions:
+data_classification: "sensitive" (unencrypted)
+Actions Taken:
+Encrypt: Encrypted the data using AES-256.
+Notify: "Sensitive data must be encrypted."
+Violation for "Access Control" (Rule ID: 4)
+Violation ID: V4
+Rule ID: 4
+Description: A user attempted to access a resource requiring Admin level access but only had User level access.
+Severity: high
+Detected Conditions:
+access_level: User (less than required_access_level: Admin)
+Actions Taken:
+Deny Access: Access denied due to insufficient access level.
+Notify: "User does not have the required access level."
+Violation for "Software Update Policy" (Rule ID: 5)
+Violation ID: V5
+Rule ID: 5
+Description: A server is running an outdated software version that was not patched within 24 hours of the patch release.
+Severity: high
+Detected Conditions:
+software_version: v1.2 (less than latest_version: v1.3)
+patch_release_time: 26h (greater than 24h)
+Actions Taken:
+Notify: "Software is outdated. Please apply the latest patch."
+Force Update: Outdated software forcefully updated to v1.3 to mitigate potential vulnerabilities.
